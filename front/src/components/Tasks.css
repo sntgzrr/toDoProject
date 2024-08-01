@@ -1,0 +1,40 @@
+main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+main div{
+    margin: 5px;
+}
+
+.tasks{
+    list-style: none;
+    padding: 0;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+}
+
+.task{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    border: solid #0c151c 5px;
+    border-radius: 30px;
+}
+
+.task label{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.task input {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
