@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Creating REST API with CRUD operations for tasks
 @RestController
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor

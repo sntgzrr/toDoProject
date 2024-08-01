@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 
+// Creating tasks table in the DataBase
 @Data
 @Entity(name = "Tasks")
 @Table(name = "\"Tasks\"", schema = "public")

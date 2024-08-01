@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { TasksContext } from "../context/tasks";
 import { useFilters } from "../hooks/useFilters";
@@ -20,14 +19,11 @@ export function Tasks() {
     // Filtering states
     const filteredTasks = filterTasks(taskList);
 
+    // Get API task list
     const getTasks = async () => {
         const tasks = await getTask()
         setTaskList(tasks)
-    };
-
-    useEffect(() => {
-        getTasks();
-    }, [getTasks]);
+    }
 
     // Method to put values within the inputs of the edit form
     const handleEditClick = (task) => {
@@ -37,30 +33,51 @@ export function Tasks() {
         setEditedCompleted(task.completed)
     }
 
-    // Method to save the edited task
-    const handleSaveClick = () => {
-        saveTask({ id: editingTask, title: editedTitle, description: editedDescription, completed: editedCompleted })
+    // Method to save the edited task and refresh tasks
+    const handleSaveClick = async () => {
+        await saveTask({ id: editingTask, title: editedTitle, description: editedDescription, completed: editedCompleted });
+        await getTasks()
+        setEditingTask(null)
     }
+
+    useEffect(() => {
+        getTasks();
+    }, []);
 
     return (
         <main>
             <h1>Tasks</h1>
-            <Filters />
+            <div className="filters">
+                <Filters />
+            </div>
             <ul className="tasks">
                 {
                     filteredTasks.map(task => (
                         editingTask === task.id ? (
                             <li className='task' key={task.id}>
-                                <label htmlFor="">Task Title:
+                                <label htmlFor=""> <h3>Task Title:</h3>
                                     <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} />
                                 </label>
 
-                                <label htmlFor="">Task Description:
+                                <label htmlFor=""> <h3>Task Description:</h3>
                                     <input type="text" value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} />
                                 </label>
                                 <label>
-                                    Completed:
-                                    <input type="checkbox" checked={editedCompleted} onChange={(e) => setEditedCompleted(e.target.checked)} />
+                                    <h3>Completed:</h3>
+                                    <div className='check-box'>
+                                        <label className="switch">
+                                            <input
+                                                id='task-mark-input'
+                                                checked={editedCompleted}
+                                                onChange={(e) => setEditedCompleted(e.target.checked)}
+                                                type="checkbox" />
+                                            <div className="slider"></div>
+                                            <div className="slider-card">
+                                                <div className="slider-card-face slider-card-front"></div>
+                                                <div className="slider-card-face slider-card-back"></div>
+                                            </div>
+                                        </label>
+                                    </div>
                                 </label>
                                 <button onClick={handleSaveClick}>
                                     Save
@@ -71,7 +88,7 @@ export function Tasks() {
                             </li>
                         ) : (
                             <li className='task' key={task.id}>
-                                <h2 style={task.completed ? { color: "#2F7523" } : { color: "#900C3F" }} >{task.title}</h2>
+                                <h2 style={task.completed ? { color: "#379237" } : { color: "#DC3535" }} >{task.title}</h2>
                                 <p>{task.description}</p>
                                 <div>
                                     <button onClick={() => removeTask(task.id)}>

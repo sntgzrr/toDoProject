@@ -46,17 +46,34 @@ export function Form() {
 
     return (
         <header>
-            <h1>To-Do Web Application</h1>
+            <h1>To-Do</h1>
             <form className='form' onSubmit={handleSubmit}>
-                <label htmlFor="task-title-input">Task Title:</label>
-                <input id='task-title-input' value={titleTask} onChange={handleChangeTitle} type="text" placeholder='Eat lunch, do laundry...' />
-                <label htmlFor="task-description-input">Task Description:</label>
-                <input id='task-description-input' value={descriptionTask} onChange={handleChangeDescription} type="text" placeholder='Go to the restaurant at 13:00, Do not forget the special soap...' />
+                <label htmlFor="task-title-input"><h3>Task Title:</h3>
+                    <input id='task-title-input' value={titleTask} onChange={handleChangeTitle} type="text" placeholder='Eat lunch, do laundry...' />
+                </label>
+
+                <label htmlFor="task-description-input"><h3>Task Description:</h3>
+                    <input id='task-description-input' value={descriptionTask} onChange={handleChangeDescription} type="text" placeholder='Go to the restaurant at 13:00, Do not forget the special soap...' />
+                </label>
+
                 <div className='check-box'>
-                    <label htmlFor="task-mark-input">Is completed? </label>
-                    <input id='task-mark-input' checked={markTask} onChange={handleMark} type="checkbox" />
+                    <label className="switch">
+                        <input
+                            id='task-mark-input'
+                            checked={markTask}
+                            onChange={handleMark}
+                            type="checkbox" />
+                        <div className="slider"></div>
+                        <div className="slider-card">
+                            <div className="slider-card-face slider-card-front"></div>
+                            <div className="slider-card-face slider-card-back"></div>
+                        </div>
+                    </label>
                 </div>
+                
+                <div>
                 <button type='submit'>Add Task</button>
+                </div>
             </form>
         </header>
     )
