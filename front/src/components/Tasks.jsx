@@ -1,14 +1,16 @@
-import { useContext, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import { TasksContext } from "../context/tasks";
 import { useFilters } from "../hooks/useFilters";
 import { Filters } from './Filters.jsx';
+import { getTask } from "../services/getTasks.jsx";
 import './Tasks.css'
 
 // This component creates the Tasks element
 export function Tasks() {
 
     // Using TasksContext to handle task states
-    const { taskList, removeTask, saveTask, editingTask, setEditingTask } = useContext(TasksContext);
+    const { taskList, setTaskList, removeTask, saveTask, editingTask, setEditingTask } = useContext(TasksContext);
     // Using filterTasks method to filter tasks based on the user's selected option
     const { filterTasks } = useFilters();
     // Task editing states
@@ -17,6 +19,15 @@ export function Tasks() {
     const [editedCompleted, setEditedCompleted] = useState(false)
     // Filtering states
     const filteredTasks = filterTasks(taskList);
+
+    const getTasks = async () => {
+        const tasks = await getTask()
+        setTaskList(tasks)
+    };
+
+    useEffect(() => {
+        getTasks();
+    }, [getTasks]);
 
     // Method to put values within the inputs of the edit form
     const handleEditClick = (task) => {

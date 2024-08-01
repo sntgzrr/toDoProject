@@ -1,24 +1,22 @@
-import { TasksContext } from '../context/tasks.jsx';
-import { useContext, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import { useState, useContext } from 'react'
+import { createTasks } from '../services/createTasks'
 import './Form.css'
+import { TasksContext } from '../context/tasks'
 
 // This component creates the Form element
 export function Form() {
-    // v4 library initialization
-    uuidv4();
 
     // Task states
     const [titleTask, setTitleTask] = useState("")
     const [descriptionTask, setDescriptionTask] = useState("")
     const [markTask, setMarkTask] = useState(false)
-    const { taskList, setTaskList } = useContext(TasksContext)
+    const { taskList, setTaskList } = useContext(TasksContext);
 
-    // Method to add a Task to the list
-    const addToDoList = () => {
-        const newTask = { id: uuidv4(), title: titleTask, description: descriptionTask, completed: markTask }
-        setTaskList([...taskList, newTask])
-    }
+    // Method to add a Task to the list and create a task in the API
+    const addToDoList = async () => {
+        const newTask = await createTasks({ titleTask, descriptionTask, markTask });
+        setTaskList([...taskList, newTask]);
+    };
 
     // Method to update the title of the task
     const handleChangeTitle = (event) => {
